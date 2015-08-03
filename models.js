@@ -9,7 +9,10 @@ var Message = function(user, text) {
   this.timestamp = new Date();
 }
 
+var nextAuctionItemId = 0;
+
 var AuctionItem = function(submitter, name, imageUrl, auctionDurationMins, auctionEndCallback) {
+  this.id = nextAuctionItemId++;
   this.submitter = submitter;
   this.name = name;
   this.imageUrl = imageUrl;
