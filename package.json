@@ -1,7 +1,8 @@
 {
-	"dependencies": {
-		"express": "^4",
-		"jade": "^1",
-		"body-parser": "^1"
-	}
+  "dependencies": {
+    "body-parser": "^1",
+    "express": "^4",
+    "jade": "^1",
+    "socket.io": "^1.3.6"
+  }
 }
