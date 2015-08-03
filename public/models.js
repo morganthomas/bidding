@@ -12,6 +12,8 @@ var Message = function(user, text) {
 var nextAuctionItemId = 0;
 
 // The auctionEndCallback runs when the auction is over. It is optional.
+// The frontend probably shouldn't use this argument, because the server decides
+// when an auction is over and sends an auction-end event to signal this.
 var AuctionItem = function(submitter, name, imageUrl, auctionDurationMins, auctionEndCallback) {
   this.id = nextAuctionItemId++;
   this.submitter = submitter;
