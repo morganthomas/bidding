@@ -1,0 +1,37 @@
+The server recognizes and emits the following messages. Unless otherwise
+stated, a message is re-broadcasted to the client when it is accepted.
+
+login:
+    Takes a User object. When client is sending, only the username property is checked;
+    the ID is determined by the server. The server responds by sending a
+    login-response message to the sender, and a login message (containing the new
+    user) to all other clients.
+
+login-response:
+    Only sent by the server. Data contains two fields: id, giving the ID assigned
+    to the user via socket.io, and state, containing the current state of the app.
+    If the login attempt failed because the username is taken, the message body
+    is just null.
+
+message:
+    Takes a Message object. When client is sending, only the text property is
+    checked; the server fills in the user and timestamp properties itself, so
+    that an attacker cannot falsify them.
+
+create-listing:
+    When client is sending, takes name, imageUrl and auctionDurationMins, which
+    are used to construct an AuctionItem object. When server is sending, an
+    AuctionItem object is sent.
+
+create-bid:
+    When client is sending, takes itemId and price. When server is sending,
+    sends a Bid object.
+
+create-bid-error:
+    Sent by server to bidding client when a bid fails for some reason (e.g., bid
+    not high enough). Has a property message explaining the error.
+
+logout:
+    Sent by client on logout. In this case the server ignores any data payload.
+    Emitted by the server to all clients on a logout, with the data being the
+    User object for the user who logged out.

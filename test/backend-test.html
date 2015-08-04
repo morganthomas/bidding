@@ -1,0 +1,51 @@
+<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+<script src="http://localhost:3000/models.js"></script>
+<script>
+var socket = io.connect('http://localhost:3000');
+
+var username = Math.random().toString();
+
+socket.on('login-response', function(data) {
+  console.log('login-response', data);
+
+  var user = { id: data.id, username: username };
+  var state = data.state;
+
+  socket.on('message', function(message) {
+    console.log('message', message);
+  });
+
+  socket.on('create-listing', function(listing) {
+    console.log('listing', listing);
+
+    socket.emit('create-bid', { itemId: listing.id, price: 1.00 });
+    socket.emit('create-bid', { itemId: listing.id, price: 1.00 });
+  });
+
+  socket.on('auction-end', function(id) {
+    console.log('auction-end', id);
+  });
+
+  socket.on('create-bid', function(bid) {
+    console.log('create-bid', bid);
+  })
+
+  socket.on('create-bid-error', function(msg) {
+    console.log('create-bid-error', msg);
+    socket.emit('logout', user);
+  })
+
+  socket.on('logout', function(user) {
+    console.log('logout', user);
+  })
+
+  socket.emit('message', { text: "Hello!" });
+  socket.emit('create-listing', {
+    name: 'Foo',
+    imageUrl: '',
+    auctionDurationMins: 0.1
+  });
+})
+
+socket.emit('login', { username: username });
+</script>
