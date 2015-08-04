@@ -10,6 +10,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', indexController.index);
+app.get('/templates/:template', indexController.template);
 
 var state = new Model.State();
 

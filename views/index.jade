@@ -1,4 +1,14 @@
-extends layout
+doctype html
+html(lang='en', ng-app="biddingApp")
+	head
+		meta(charset="utf-8")
+		title Bidding App!
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-route.js")
+		script(src="/index.js")
 
-block content
-	h1 Hello Boulder!
+	body
+		h1 Hello!
+		
+		div(ng-controller="sessionController")
+			div(ng-view)
