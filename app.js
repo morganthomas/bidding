@@ -10,6 +10,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', indexController.index);
 
-var server = app.listen(3000, function() {
-	console.log('Express server listening on port ' + server.address().port);
-});
+var io = require('socket.io').listen(app.listen(3000, function() {
+	console.log('Express server listening on port 3000');
+}));
