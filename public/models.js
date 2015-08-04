@@ -117,10 +117,10 @@ State.prototype.addBid = function(bid) {
   }
 };
 
-// Sets the given auction item's status to closed.
-State.prototype.closeAuction = function(item) {
+// Sets the status of the auction item with the given ID to closed.
+State.prototype.closeAuction = function(id) {
   this.auction.forEach(function(otherItem) {
-    if (otherItem.id === item.id) {
+    if (otherItem.id === id) {
       otherItem.status = 'closed';
     }
   });
@@ -131,6 +131,8 @@ if (typeof window === 'undefined') {
     User: User,
     Message: Message,
     AuctionItem: AuctionItem,
-    Bid: Bid
+    Bid: Bid,
+    State: State,
+    bidIsHighEnough: bidIsHighEnough
   };
 }
