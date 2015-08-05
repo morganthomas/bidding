@@ -30,6 +30,8 @@ var registerLoggedInEvents = function(io, state, user, socket) {
   socket.on('message', function(data) {
     var message = new Model.Message(user, data.text);
     state.addMessage(message);
+    console.log('About to emit message..', message);
+      
     io.emit('message', message);
   });
 

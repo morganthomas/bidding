@@ -7,3 +7,11 @@ div.container
             h2 Bids
         div.col-md-4(ng-controller="chatController")
             h2 Live Chat
+            ul(ng-repeat="msg in state.messages")
+                li
+                    span 
+                        strong {{msg.user.username}}
+                    | &nbsp; {{msg.text}}
+            
+            input(ng-model="newMessage")
+            button(ng-click="addMessage()") Add Message

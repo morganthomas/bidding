@@ -23,7 +23,7 @@ biddingApp.controller('loginController', function($scope, stateFactory, $locatio
             stateFactory.messages = data.state.messages;
             stateFactory.users = data.state.users;
         
-            $scope.user = new User(data.id, $scope.username);
+            stateFactory.me = new User(data.id, $scope.username);
             
             $location.path("/main")
         })
@@ -35,10 +35,36 @@ biddingApp.controller('loginController', function($scope, stateFactory, $locatio
 
 biddingApp.factory('stateFactory', function() {
     var state = new State();
+    state.me = null;
     
     return state;
 })
 
-biddingApp.controller('mainController', function($scope, stateFactory) {
-  $scope.state = stateFactory;
+biddingApp.controller('mainController', function($scope, stateFactory, $location) {
+    $scope.state = stateFactory;
+    
+    if(!stateFactory.me) {
+        $location.path('/');
+    }
+});
+
+
+biddingApp.controller('chatController', function($scope, stateFactory) {
+    $scope.state = stateFactory;
+    
+    $scope.addMessage = function() {
+        // emit message with text data
+        socket.emit('message', {text: $scope.newMessage} );
+
+        // Reset the message input
+        $scope.newMessage = '';
+    }
+    
+    // catch message coming back from server and push into state
+    socket.on('message',function(messageFromServer){
+        $scope.$apply(function(){
+            $scope.state.messages.push(messageFromServer); 
+        });
+    });
+    
 });
