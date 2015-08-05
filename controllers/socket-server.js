@@ -16,7 +16,8 @@ module.exports = function(state, server) {
         registerLoggedInEvents(io, state, user, socket);
 
         socket.emit('login-response', { id: user.id, state: state });
-        socket.broadcast.emit('login', user);
+        // Changed socket.broadcast.emit to io.emit
+        io.emit('login', user);
       } else {
         socket.emit('login-response', null);
       }
