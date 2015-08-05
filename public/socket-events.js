@@ -9,3 +9,7 @@ socket.on('login-response', function(dataFromServer){
     console.log('Login Response Fired', dataFromServer);
 });
 
+socket.on('create-bid-error', function(data) {
+  console.log("Bid error!");
+  alert(data.message);
+});

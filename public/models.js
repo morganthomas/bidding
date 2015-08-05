@@ -103,6 +103,10 @@ State.prototype.addBid = function(bid) {
     var item = matchingItems[0];
 
     if (item.status === 'open') {
+      if (isNaN(bid.price)){
+        return 'Price is not a number!'
+      } 
+
       if (bidIsHighEnough(item, bid)) {
         item.bids.unshift(bid);
         return 'OK';

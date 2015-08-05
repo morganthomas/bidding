@@ -4,6 +4,34 @@ div.container
     
     div.row
         div.col-md-8(ng-controller="biddingController")
-            h2 Bids
+          div
+            h2 Start a new auction!
+            
+            form(ng-submit="startAuction()")
+              input(placeholder="Item Name" ng-model="startAuctionForm.name")
+              input(placeholder="Image (URL)" ng-model="startAuctionForm.imageUrl")
+              input(placeholder="Duration of auction (minutes)" ng-model="startAuctionForm.auctionDurationMins")
+              input(type="submit")
+            
+            h2 Open auctions
+            
+            div#open-listings
+              div(ng-repeat="listing in state.auction | filter:openListingsFilter")
+                h3 {{listing.name}}
+                img(src="{{listing.imageUrl}}")
+                p Seller: {{listing.submitter.username}}
+                p Time remaining: {{listing.timeRemaining}}
+                form(ng-submit="submitBid(listing)")
+                  input(placeholder="price", ng-model="listing.mybid")
+                  input(type="submit", value="Bid!")
+            
+            h2 Closed auctions
+            
+            div#closed-listings
+              div(ng-repeat="listing in state.auction | filter:closedListingsFilter")
+                h3 {{listing.name}}
+                img(src="{{listing.imageUrl}}")
+                p Seller: {{listing.submitter.username}}
+            
         div.col-md-4(ng-controller="chatController")
             h2 Live Chat

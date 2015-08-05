@@ -46,7 +46,7 @@ var registerLoggedInEvents = function(io, state, user, socket) {
   });
 
   socket.on('create-bid', function(data) {
-    var bid = new Model.Bid(data.itemId, user, data.price);
+    var bid = new Model.Bid(data.itemId, user, parseFloat(data.price) );
 
     var status = state.addBid(bid);
 
