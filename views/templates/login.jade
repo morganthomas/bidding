@@ -1,4 +1,6 @@
-form(ng-submit="loginHandler()")
-  p {{username}}
-  input(placeholder="Username" ng-model="username")
-  input(type="submit" value="Login")
+div.container
+    h1 Login to Bid!
+    form(ng-submit="loginHandler()")
+      p {{username}}
+      input(placeholder="Username" ng-model="username")
+      input(type="submit" value="Login")

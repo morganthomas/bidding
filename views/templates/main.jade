@@ -1,1 +1,9 @@
-div This is main! {{state}}
+div.container
+    h1 This is main!
+    p The state is.. {{state}}
+    
+    div.row
+        div.col-md-8(ng-controller="biddingController")
+            h2 Bids
+        div.col-md-4(ng-controller="chatController")
+            h2 Live Chat
