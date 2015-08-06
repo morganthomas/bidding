@@ -105,19 +105,23 @@ State.prototype.addBid = function(bid) {
     if (item.status === 'open') {
       if (isNaN(bid.price)){
         return 'Price is not a number!'
-      } 
+      }
+
+      if (bid.price <= 0) {
+        return 'Bid must be greater than zero!'
+      }
 
       if (bidIsHighEnough(item, bid)) {
         item.bids.unshift(bid);
         return 'OK';
       } else {
-        return 'bid not high enough';
+        return 'Bid not high enough! Bid must be at least ' + MIN_BID_INCREASE_COEF + ' times the last highest bid.';
       }
     } else {
-      return 'auction closed';
+      return 'Auction closed.';
     }
   } else {
-    return 'item does not exist';
+    return 'Item does not exist.';
   }
 };
 
