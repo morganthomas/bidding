@@ -6,50 +6,63 @@ div.container
           div
             h2 Start a new auction!
             
-            form(ng-submit="startAuction()")
-              input(placeholder="Item Name" ng-model="startAuctionForm.name")
-              input(placeholder="Image (URL)" ng-model="startAuctionForm.imageUrl")
-              input(placeholder="Duration of auction (minutes)" ng-model="startAuctionForm.auctionDurationMins")
-              input(type="submit")
-            
+            div.row
+              div.col-sm-8
+                form(ng-submit="startAuction()")
+                  div.form-group
+                    label.control-label Item to Auction
+                    input.form-control(placeholder="Item Name" ng-model="startAuctionForm.name")
+                  div.form-group
+                    label.control-label Image URL
+                    input.form-control(placeholder="Image (URL)" ng-model="startAuctionForm.imageUrl")
+                  div.form-group
+                    label.control-label Auction Duration (Minutes)
+                    input.form-control(placeholder="Duration of auction (minutes)" ng-model="startAuctionForm.auctionDurationMins")
+                  div.form-group
+                    input.btn.btn-warning(type="submit")
+
             h2 Open auctions
             
             div#open-listings
-              div(ng-repeat="listing in state.auction | filter:openListingsFilter")
-                h3 {{listing.name}}
-                img(src="{{listing.imageUrl}}")
-                p Seller: {{listing.submitter.username}}
-                p Time remaining: {{listing.timeRemaining}}
-                form(ng-submit="submitBid(listing)")
-                  input(placeholder="price", ng-model="listing.mybid")
-                  input(type="submit", value="Bid!")
-                  
-                h4(ng-show="listing.bids[0]") Bids
-                div
-                  div(ng-repeat="bid in listing.bids") {{bid.price | currency}} {{bid.user.username}}
+              div.open-listing.row(ng-repeat="listing in state.auction | filter:openListingsFilter")
+                div.col-sm-8
+                  h3 {{listing.name}}
+                  img(src="{{listing.imageUrl}}").listing-img
+                  p Seller: <strong>{{listing.submitter.username}}</strong>
+                  p Time remaining: {{listing.timeRemaining}}
+                  form(ng-submit="submitBid(listing)").form-inline
+                    input(placeholder="price", ng-model="listing.mybid").form-control
+                    input(type="submit", value="Bid!").btn.btn-warning
+                div.col-sm-4
+                  h3(ng-show="listing.bids[0]") Bids
+                  div
+                    div(ng-repeat="bid in listing.bids") {{bid.price | currency}} - <strong>{{bid.user.username}}</strong>
             
             h2 Closed auctions
             
             div#closed-listings
-              div(ng-repeat="listing in state.auction | filter:closedListingsFilter")
-                h3 {{listing.name}}
-                img(src="{{listing.imageUrl}}")
-                p Seller: {{listing.submitter.username}}
-                p(ng-show="listing.bids[0]") Sold to {{listing.bids[0].user.username}} for {{listing.bids[0].price | currency}}!
-                p(ng-show="!listing.bids[0]") This item received no bids!
-              
-                h4(ng-show="listing.bids[0]") Bids
-                div
-                  div(ng-repeat="bid in listing.bids") {{bid.price | currency}} {{bid.user.username}}
+              div.closed-listing.row(ng-repeat="listing in state.auction | filter:closedListingsFilter")
+                div.col-sm-8
+                  h3 {{listing.name}}
+                  img(ng-src="{{listing.imageUrl}}").listing-img
+                  p Seller: <strong>{{listing.submitter.username}}</strong>
+                  p(ng-show="listing.bids[0]") Sold to <strong>{{listing.bids[0].user.username}}</strong> for <strong>{{listing.bids[0].price | currency}}</strong>!
+                  p(ng-show="!listing.bids[0]") This item received no bids!
+                div.col-sm-4
+                  h3(ng-show="listing.bids[0]") Bids
+                  div
+                    div(ng-repeat="bid in listing.bids") {{bid.price | currency}} - <strong>{{bid.user.username}}</strong>
+                  
+        // Chat Sidebar
+        div.col-md-4.chat-sidebar(ng-controller="chatController")
+            h2.chat-title Live Chat
             
-        div.col-md-4(ng-controller="chatController")
-            h2 Live Chat
-            
-            ul(ng-repeat="msg in state.messages")
-                li
-                    span 
+            ul.chat-list
+                li.chat-message(ng-repeat="msg in state.messages")
+                    span
                         strong {{msg.user.username}}
                     | &nbsp; {{msg.text}}
-            
-            input(ng-model="newMessage")
-            button(ng-click="addMessage()") Add Message
+                    
+            div.chat-input
+                input.form-control(ng-model="newMessage")
+                button.btn.btn-primary.chat-button(ng-click="addMessage()") Add Message

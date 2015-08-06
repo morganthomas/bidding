@@ -1,5 +1,7 @@
 div.container
-    h1 Login to Bid!
-    form(ng-submit="loginHandler()")
-      input(placeholder="Username" ng-model="username")
-      input(type="submit" value="Login")
+    div.row
+    div.col-sm-offset-4.col-sm-4
+        h1 Login to Bid!
+        form(ng-submit="loginHandler()")
+          input(placeholder="Username" ng-model="username").form-control.login-input
+          input(type="submit" value="Login").btn.btn-warning
