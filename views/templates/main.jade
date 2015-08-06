@@ -51,5 +51,6 @@ div.container
                         strong {{msg.user.username}}
                     | &nbsp; {{msg.text}}
             
-            input(ng-model="newMessage")
-            button(ng-click="addMessage()") Add Message
+            form(ng-submit="addMessage()")
+              input(ng-model="newMessage")
+              input(type="submit" value="Add Message")
