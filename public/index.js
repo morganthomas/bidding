@@ -12,6 +12,10 @@ biddingApp.config(function($routeProvider) {
     });
 })
 
+var setupTimeRemainingField = function(auctionItem) {
+  auctionItem.timeRemaining = Math.round((Date.parse(auctionItem.endTime) - Date.now()) / 1000);
+}
+
 biddingApp.controller('loginController', function($scope, stateFactory, $location) {
 
   $scope.loginHandler = function() {
@@ -27,6 +31,10 @@ biddingApp.controller('loginController', function($scope, stateFactory, $locatio
             stateFactory.auction = data.state.auction;
             stateFactory.messages = data.state.messages;
             stateFactory.users = data.state.users;
+
+            stateFactory.auction.forEach(function(auctionItem) {
+              setupTimeRemainingField(auctionItem);
+            });
 
             stateFactory.me = new User(data.id, $scope.username);
 
@@ -81,12 +89,12 @@ biddingApp.controller('biddingController', function($scope, stateFactory) {
     console.log(auctionItem);
     $scope.$apply(function() {
       stateFactory.addListing(auctionItem);
-      auctionItem.timeRemaining = Math.round((Date.parse(auctionItem.endTime) - Date.now()) / 1000);
+      setupTimeRemainingField(auctionItem);
 
       if (auctionItem.submitter.id === stateFactory.me.id) {
         $scope.startAuctionForm.name = '';
         $scope.startAuctionForm.imageUrl = '';
-        $scope.startAuctionForm.auctionDurationMins = '';  
+        $scope.startAuctionForm.auctionDurationMins = '';
       }
     });
     // console.log('create-listing rec', data);
