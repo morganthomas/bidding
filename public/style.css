@@ -1,0 +1,51 @@
+h1, h2 {
+    color: #E85509;
+}
+.login-input {
+    margin-bottom: 5px;
+}
+.open-listing {
+    border: 1px solid #FF9300;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.closed-listing {
+    background-color: #efefef;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.listing-img {
+    width: 300px;
+}
+.chat-title {
+    color: white;
+}
+.chat-message {
+    color: white; 
+}
+.chat-sidebar {
+    position: fixed;
+    right: 0;
+    background-color: #FF9300;
+    height: 100%;
+}
+.chat-input {
+    position: fixed;
+    bottom: 30px;
+    width: 30%;
+}
+.chat-button {
+    margin-top: 10px;
+}
+.chat-list {
+    padding-left: 0;
+}
+.chat-message {
+    list-style: none;
+}
+
+@media (max-width: 1000px) {
+    .chat-sidebar {
+        display: none;
+    }
+}
