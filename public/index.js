@@ -41,13 +41,13 @@ biddingApp.controller('loginController', function($scope, stateFactory, $locatio
 biddingApp.factory('stateFactory', function() {
     var state = new State();
     state.me = null;
-    
+
     return state;
 })
 
 biddingApp.controller('mainController', function($scope, stateFactory, $location) {
     $scope.state = stateFactory;
-    
+
     if(!stateFactory.me) {
         $location.path('/');
     }
@@ -56,7 +56,7 @@ biddingApp.controller('mainController', function($scope, stateFactory, $location
 
 biddingApp.controller('chatController', function($scope, stateFactory) {
     $scope.state = stateFactory;
-    
+
     $scope.addMessage = function() {
         // emit message with text data
         socket.emit('message', {text: $scope.newMessage} );
@@ -64,14 +64,14 @@ biddingApp.controller('chatController', function($scope, stateFactory) {
         // Reset the message input
         $scope.newMessage = '';
     }
-    
+
     // catch message coming back from server and push into state
     socket.on('message',function(messageFromServer){
         $scope.$apply(function(){
-            $scope.state.messages.push(messageFromServer); 
+            $scope.state.messages.push(messageFromServer);
         });
     });
-    
+
 });
 
 biddingApp.controller('biddingController', function($scope, stateFactory) {
@@ -82,6 +82,12 @@ biddingApp.controller('biddingController', function($scope, stateFactory) {
     $scope.$apply(function() {
       stateFactory.addListing(auctionItem);
       auctionItem.timeRemaining = Math.round((Date.parse(auctionItem.endTime) - Date.now()) / 1000);
+
+      if (auctionItem.submitter.id === stateFactory.me.id) {
+        $scope.startAuctionForm.name = '';
+        $scope.startAuctionForm.imageUrl = '';
+        $scope.startAuctionForm.auctionDurationMins = '';  
+      }
     });
     // console.log('create-listing rec', data);
   });
@@ -122,6 +128,8 @@ biddingApp.controller('biddingController', function($scope, stateFactory) {
       itemId  : listing.id,
       price   : listing.mybid
     });
+
+    listing.mybid = '';
   };
 
   $scope.startAuction = function() {
