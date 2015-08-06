@@ -18,7 +18,7 @@ var setupTimeRemainingField = function(auctionItem) {
 
 biddingApp.filter('timeRemainingFilter', function() {
   return function(secs) {
-    return (secs >= 60 ? Math.floor(secs / 60) + ':' : '') + secs % 60;
+    return (secs >= 60 ? Math.floor(secs / 60) + ':' : '') + (secs % 60 < 10 ? '0' : '') + secs % 60;
   }
 })
 
