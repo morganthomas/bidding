@@ -1,6 +1,5 @@
 div.container
-    h1 This is main!
-    p The state is.. {{state}}
+    //- p The state is.. {{state}}
     
     div.row
         div.col-md-8(ng-controller="biddingController")
@@ -24,6 +23,10 @@ div.container
                 form(ng-submit="submitBid(listing)")
                   input(placeholder="price", ng-model="listing.mybid")
                   input(type="submit", value="Bid!")
+                  
+                h4(ng-show="listing.bids[0]") Bids
+                div
+                  div(ng-repeat="bid in listing.bids") {{bid.price | currency}} {{bid.user.username}}
             
             h2 Closed auctions
             
@@ -32,6 +35,12 @@ div.container
                 h3 {{listing.name}}
                 img(src="{{listing.imageUrl}}")
                 p Seller: {{listing.submitter.username}}
+                p(ng-show="listing.bids[0]") Sold to {{listing.bids[0].user.username}} for {{listing.bids[0].price | currency}}!
+                p(ng-show="!listing.bids[0]") This item received no bids!
+              
+                h4(ng-show="listing.bids[0]") Bids
+                div
+                  div(ng-repeat="bid in listing.bids") {{bid.price | currency}} {{bid.user.username}}
             
         div.col-md-4(ng-controller="chatController")
             h2 Live Chat
