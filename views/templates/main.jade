@@ -19,7 +19,7 @@ div.container
                 h3 {{listing.name}}
                 img(src="{{listing.imageUrl}}")
                 p Seller: {{listing.submitter.username}}
-                p Time remaining: {{listing.timeRemaining}}
+                p Time remaining: {{listing.timeRemaining | timeRemainingFilter}}
                 form(ng-submit="submitBid(listing)")
                   input(placeholder="price", ng-model="listing.mybid")
                   input(type="submit", value="Bid!")

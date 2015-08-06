@@ -16,6 +16,12 @@ var setupTimeRemainingField = function(auctionItem) {
   auctionItem.timeRemaining = Math.round((Date.parse(auctionItem.endTime) - Date.now()) / 1000);
 }
 
+biddingApp.filter('timeRemainingFilter', function() {
+  return function(secs) {
+    return (secs >= 60 ? Math.floor(secs / 60) + ':' : '') + secs % 60;
+  }
+})
+
 biddingApp.controller('loginController', function($scope, stateFactory, $location) {
 
   $scope.loginHandler = function() {
