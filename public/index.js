@@ -137,6 +137,18 @@ biddingApp.controller('biddingController', function($scope, stateFactory) {
     return auctionItem.status === 'closed';
   }
 
+  $scope.openAuctionsExist = function() {
+    return _.some(stateFactory.auction, function(auctionItem) {
+      return auctionItem.status === 'open';
+    });
+  };
+
+  $scope.closedAuctionsExist = function() {
+    return _.some(stateFactory.auction, function(auctionItem) {
+      return auctionItem.status === 'closed';
+    });
+  };
+
   $scope.submitBid = function(listing){
     socket.emit('create-bid', {
       itemId  : listing.id,

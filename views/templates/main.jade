@@ -12,7 +12,7 @@ div.container
               input(placeholder="Duration of auction (minutes)" ng-model="startAuctionForm.auctionDurationMins")
               input(type="submit")
             
-            h2 Open auctions
+            h2(ng-show="openAuctionsExist()") Open auctions
             
             div#open-listings
               div(ng-repeat="listing in state.auction | filter:openListingsFilter")
@@ -28,7 +28,7 @@ div.container
                 div
                   div(ng-repeat="bid in listing.bids") {{bid.price | currency}} {{bid.user.username}}
             
-            h2 Closed auctions
+            h2(ng-show="closedAuctionsExist()") Closed auctions
             
             div#closed-listings
               div(ng-repeat="listing in state.auction | filter:closedListingsFilter")
